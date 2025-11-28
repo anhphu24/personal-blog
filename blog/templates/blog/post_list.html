@@ -1,0 +1,70 @@
+{% extends "blog/base.html" %}
+{% block title %}記事一覧{% endblock %}
+
+{% block contents %}
+<div class="py-5">
+  <div class="container">
+    <h2 class="mb-3">記事一覧</h2>
+
+    <form method="get" class="row g-2 mb-3">
+      <div class="col-md-4">
+        <input type="text" name="q" class="form-control"
+               placeholder="キーワード検索" value="{{ query }}">
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="tag" class="form-control"
+               placeholder="タグ" value="{{ tag }}">
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">検索</button>
+      </div>
+    </form>
+
+    <div class="list-group">
+      {% for post in posts %}
+        <a href="{% url 'blog:post_detail' slug=post.slug %}"
+           class="list-group-item list-group-item-action">
+          <h5 class="mb-1">{{ post.title }}</h5>
+          <small class="text-muted">
+            {{ post.created_at|date:"Y-m-d" }} / {{ post.author }}
+            {% if post.tags %} / タグ: {{ post.tags }}{% endif %}
+          </small>
+          <p class="mb-1 mt-1">{{ post.body|truncatechars:100 }}</p>
+        </a>
+      {% empty %}
+        <p>投稿がありません。</p>
+      {% endfor %}
+    </div>
+
+    {% if is_paginated %}
+    <nav class="mt-3">
+      <ul class="pagination">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link"
+               href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if tag %}&tag={{ tag }}{% endif %}">
+              前へ
+            </a>
+          </li>
+        {% endif %}
+
+        <li class="page-item disabled">
+          <span class="page-link">
+            {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+          </span>
+        </li>
+
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link"
+               href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if tag %}&tag={{ tag }}{% endif %}">
+              次へ
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
