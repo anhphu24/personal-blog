@@ -19,9 +19,9 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = "phu.devvault@gmail.com"  # Gmail của bạn
-EMAIL_HOST_PASSWORD = "gprd icvj mwgo kdjr"  # Mật khẩu ứng dụng 16 ký tự
-
+EMAIL_HOST_USER = ">>>"  # Gmail của bạn
+EMAIL_HOST_PASSWORD = "???"  # Mật khẩu ứng dụng 16 ký tự
+s
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
